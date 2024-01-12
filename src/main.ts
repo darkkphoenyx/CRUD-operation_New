@@ -1,4 +1,5 @@
 import express, { NextFunction, Request, Response } from 'express'
+import buildError from './util/build-errors'
 import todoRouter from './routes/todo.router'
 const app = express()
 
@@ -12,13 +13,8 @@ app.listen(PORT, () => {
 
 app.use('/todos', todoRouter)
 app.use((err: any, req: Request, res: Response, next: NextFunction) => {
-    if (err.isBoom) {
-        const error = {
-            code: err.output.statusCode,
-            message: err.output.payload.message || err.output.payload.status,
-        }
-        res.status(error.code).json({ error })
-    }
+    const error = buildError(err)
+    res.status(error.code).json({ error })
 })
 
 export default app
