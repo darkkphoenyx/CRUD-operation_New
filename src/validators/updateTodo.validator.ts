@@ -11,6 +11,6 @@ export const updateTodoDTOid = z.object({
 export const updateTodoDTObody = z.object({
     body: z.object({
         title: z.string({ required_error: 'Title must be a string' }),
-        status: z.enum(['completed', 'ongoing']),
+        status: z.enum(['completed', 'ongoing','ragnarok']),
     }),
 })

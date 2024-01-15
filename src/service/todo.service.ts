@@ -36,23 +36,45 @@ export const getTodo = async (id: any) => {
 
 //DELETE  by id
 export const deleteTodo = async (id: any) => {
-    return await prisma.todo.delete({
-        where: {
-            id: Number(id),
-        },
-    })
-}
+    try{await prisma.todo.findUniqueOrThrow
+        ({
+            where: {
+                id: Number(id),
+            }})
+        return await prisma.todo.delete({
+            where: {
+                id: Number(id),
+            },
+        })
+    }
+    catch (err: any) {
+        if (err.code === 'P2025') {
+            throw Boom.notFound('post not found')
+        } else {
+            throw err
+        }
+    }
+    }
 
 //UPDATE by id
 export const updateTodo = async (id: any, body: any) => {
-    const { title, status } = body
-    return await prisma.todo.update({
-        where: { id: Number(id) },
-        data: {
-            title: title,
-            status: status,
-        },
-    })
+    try{
+        const { title, status } = body
+        return await prisma.todo.update({
+            where: { id: Number(id) },
+            data: {
+                title: title,
+                status: status,
+            },
+        })
+    }
+    catch (err: any) {
+        if (err.code === 'P2025') {
+            throw Boom.notFound('post not found')
+        } else {
+            throw err
+        }
+    }
 }
 function next(err: any) {
     throw new Error('Function not implemented.')

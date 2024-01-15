@@ -27,8 +27,12 @@ export const deleteTodosByID = async (
     res: Response,
     next: NextFunction
 ) => {
-    const response = await todoService.deleteTodo(req.params.id)
-    res.json(response)
+    try {
+        const response = await todoService.deleteTodo(req.params.id)
+        res.json(response)
+    } catch (error) {
+        next(error)
+    }
 }
 
 //UPDATE by id
@@ -37,6 +41,10 @@ export const updateTodo = async (
     res: Response,
     next: NextFunction
 ) => {
-    const response = await todoService.updateTodo(req.params.id, req.body)
-    res.json(response)
+    try {
+        const response = await todoService.updateTodo(req.params.id, req.body)
+        res.json(response)
+    } catch (error) {
+        next(error)
+    }
 }
