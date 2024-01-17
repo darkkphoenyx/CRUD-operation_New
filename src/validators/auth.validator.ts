@@ -10,8 +10,8 @@ export const signupBodySchema = z.object({
     password: z.string({
         required_error: 'Password is required',
     }),
-    is_Admin:z.string({
-        required_error:'Admin user or not?',
+    is_Admin:z.boolean({
+        required_error:'is_Admin:(true/false) - Boolean also required',
     }),
 })
 
@@ -28,8 +28,8 @@ export const loginBodySchema = z.object({
     password: z.string({
         required_error: 'Password is required',
     }),
-    is_Admin:z.string({
-        required_error:'Admin user or not?',
+    is_Admin:z.boolean({
+        required_error:'is_Admin:(true/false) - Boolean also required',
     }),
 })
 

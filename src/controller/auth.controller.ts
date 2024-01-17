@@ -26,12 +26,11 @@ export const loginUser = async (
     next: NextFunction
 ) => {
     try {
-        const { email, password, is_Admin} = loginBodySchema.parse(req.body)
+        const { email, password} = loginBodySchema.parse(req.body)
 
         const { accessToken, refreshToken } = await AuthService.login(
             email,
             password,
-            is_Admin
         )
         res.cookie('refreshToken', refreshToken, {
             httpOnly: true,
