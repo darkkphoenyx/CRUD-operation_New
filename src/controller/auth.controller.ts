@@ -43,10 +43,9 @@ export const loginUser = async (
 }
 
 
-//Delete user
-export const deleteUser=async(req:Request, res: Response, next: NextFunction)=>{
+// //Delete user
+// export const deleteUser=async(req:Request, res: Response, next: NextFunction)=>{
 
-}
 
 //Refresh access token
 export const refreshToken = async (
@@ -60,20 +59,6 @@ export const refreshToken = async (
         res.json({ accessToken: token })
     } catch (error) {
         next(error)
-    }
-}
-
-//Get by id
-export const getUserByID = async (
-    req: Request,
-    res: Response,
-    next: NextFunction
-) => {
-    try {
-        const response = await AuthService.getUser(req.params.id)
-        res.json(response)
-    } catch (err) {
-        next(err)
     }
 }
 

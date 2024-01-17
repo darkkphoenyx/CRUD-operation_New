@@ -9,7 +9,6 @@ import {
 import * as AuthController from '../controller/auth.controller'
 import { authenticateToken, isAdmin } from '../middlewares/authentication.middleware'
 import { getTodosByID } from '../controller/todo.controller'
-import { getUserDTO } from '../validators/getUser.validator'
 
 const router = Router()
 
@@ -21,16 +20,6 @@ router.post(
     `/signup`,
     validateByBody(signupSchema),
     AuthController.registerUser
-)
-
-//Get by id
-router.get(
-    '/:id',
-    authenticateToken,validateByid(getUserDTO),
-    AuthController.getUserByID,
-    (req, res) => {
-        
-    }
 )
 
 //Refresh access token
@@ -48,11 +37,6 @@ router.post('/forgot-password', () => {
     console.log(
         'this method should send an email using sendgrid to the user with forgot password link'
     )
-})
-
-//Delete uesr
-router.delete('/:id', authenticateToken, (req, res) => {
-    res.send('Data deleted')
 })
 
 export default router

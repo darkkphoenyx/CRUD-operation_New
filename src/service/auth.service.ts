@@ -71,24 +71,3 @@ export async function refresh(refreshToken: string) {
         throw Boom.unauthorized('User is not logged in')
     }
 }
-
-export const getUser = async (id: any) => {
-    try {
-        return await prisma.user.findUniqueOrThrow({
-            where: {
-                id: Number(id),
-            }, 
-            select: {   //this is the output to the response secion
-                id: true,   //these are the attributes that gets printed at the response
-                email: true,
-                is_Admin:true,
-            },
-        })
-    } catch (err: any) {
-        if (err.code === 'P2025') {
-            throw Boom.notFound('User not found')   //this error is executed if the user is not found
-        } else {
-            throw err
-        }
-    }
-}
