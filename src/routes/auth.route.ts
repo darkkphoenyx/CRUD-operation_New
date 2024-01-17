@@ -29,7 +29,7 @@ router.get(
     authenticateToken,validateByid(getUserDTO),
     AuthController.getUserByID,
     (req, res) => {
-        res.send('hello')
+        
     }
 )
 
