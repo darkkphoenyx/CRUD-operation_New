@@ -13,20 +13,10 @@ import { authenticateToken } from '../middlewares/authentication.middleware'
 const router = Router()
 
 //POST to databse
-router.post(
-    '/',
-    validateByBody(postTodoValidatorDTO),
-    authenticateToken,
-    todoController.postTodos
-)
+router.post('/',validateByBody(postTodoValidatorDTO),todoController.postTodos)
 
 //GET todos by id
-router.get(
-    '/:id',
-    validateByid(getTodoDTO),
-    authenticateToken,
-    todoController.getTodosByID
-)
+router.get('/:id', validateByid(getTodoDTO),todoController.getTodosByID)
 
 //DELETE by id
 router.delete(
@@ -36,12 +26,6 @@ router.delete(
 )
 
 //UPDATE by id
-router.put(
-    '/:id',
-    validateByid(updateTodoDTOid),
-    
-    validateByBody(updateTodoDTObody),
-    todoController.updateTodo
-)
+router.put('/:id', validateByid(updateTodoDTOid), validateByBody(updateTodoDTObody),todoController.updateTodo)
 
 export default router

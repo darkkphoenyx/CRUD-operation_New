@@ -2,6 +2,7 @@ import express, { NextFunction, Request, Response } from 'express'
 import buildError from './util/build-errors'
 import authRouter from './routes/auth.route'
 import todoRouter from './routes/todo.router'
+import { authenticateToken } from './middlewares/authentication.middleware'
 const app = express()
 
 app.use(express.json())
