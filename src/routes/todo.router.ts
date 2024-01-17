@@ -28,7 +28,8 @@ router.delete(
     todoController.deleteTodosByID
 )
 
-//UPDATE by id
+//UPDATE by id--Put method
+//update by patch method not working
 router.put('/:id', validateByid(updateTodoDTOid), validateByBody(updateTodoDTObody),authenticateToken,todoController.updateTodo)
 
 export default router
