@@ -56,23 +56,6 @@ export const getAll = async () => {
     }
 };
 
-//GET todos by id
-export const getAll = async () => {
-    // try{
-    //     return await prisma.todo.findMany()
-    // }
-    // catch(err){
-    //     next(err)
-    // }
-    const result = await prisma.todo.findMany()
-    if (result != null) {
-        console.log('i am here')
-        return result}
-    else {
-        return 'Database is empty'
-    }
-
-}
 
 //GET todos by id
 export const getTodo = async (id: any) => {
