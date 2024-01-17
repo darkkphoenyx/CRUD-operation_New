@@ -1,5 +1,6 @@
 import { z } from 'zod'
 
+//SignIn
 export const signupBodySchema = z.object({
     email: z
         .string({
@@ -9,19 +10,26 @@ export const signupBodySchema = z.object({
     password: z.string({
         required_error: 'Password is required',
     }),
+    is_Admin:z.string({
+        required_error:'Admin user or not?',
+    }),
 })
 
 export const signupSchema = z.object({
     body: signupBodySchema,
 })
 
+//LogIn
 export const loginBodySchema = z.object({
     email: z.string({
-        required_error: 'checking is required',
+        required_error: 'Email is required',
     })
     .email('Email address is invalid'),
     password: z.string({
         required_error: 'Password is required',
+    }),
+    is_Admin:z.string({
+        required_error:'Admin user or not?',
     }),
 })
 

@@ -1,7 +1,9 @@
 import { NextFunction, Request, Response } from 'express'
 import { loginBodySchema, signupBodySchema } from '../validators/auth.validator'
 import * as AuthService from '../service/auth.service'
+import { string } from 'zod'
 
+//Register new user
 export const registerUser = async (
     req: Request,
     res: Response,
@@ -17,17 +19,19 @@ export const registerUser = async (
     }
 }
 
+//Login user
 export const loginUser = async (
     req: Request,
     res: Response,
     next: NextFunction
 ) => {
     try {
-        const { email, password } = loginBodySchema.parse(req.body)
+        const { email, password, is_Admin} = loginBodySchema.parse(req.body)
 
         const { accessToken, refreshToken } = await AuthService.login(
             email,
-            password
+            password,
+            is_Admin
         )
         res.cookie('refreshToken', refreshToken, {
             httpOnly: true,
@@ -38,6 +42,13 @@ export const loginUser = async (
     }
 }
 
+
+//Delete user
+export const deleteUser=async(req:Request, res: Response, next: NextFunction)=>{
+
+}
+
+//Refresh access token
 export const refreshToken = async (
     req: Request,
     res: Response,
@@ -49,6 +60,20 @@ export const refreshToken = async (
         res.json({ accessToken: token })
     } catch (error) {
         next(error)
+    }
+}
+
+//Get by id
+export const getUserByID = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+) => {
+    try {
+        const response = await AuthService.getUser(req.params.id)
+        res.json(response)
+    } catch (err) {
+        next(err)
     }
 }
 

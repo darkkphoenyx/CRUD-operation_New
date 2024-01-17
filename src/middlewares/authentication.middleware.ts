@@ -3,6 +3,8 @@ import { Response, NextFunction } from 'express'
 import { RequestWithUserObject, UserJWTPayload } from '../types'
 import { verifyAccessToken } from '../util/token.util'
 
+
+//Authenticate token
 export function authenticateToken(
     req: RequestWithUserObject,
     res: Response,
@@ -24,6 +26,7 @@ export function authenticateToken(
     }
 }
 
+//Check admin or not
 export function isAdmin(
     req: RequestWithUserObject,
     res: Response,
