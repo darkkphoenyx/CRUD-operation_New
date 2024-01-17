@@ -6,6 +6,7 @@ export const validateByBody =
     (schema: AnyZodObject) =>
     async (req: Request, res: Response, next: NextFunction) => {
         try {
+            console.log(req.body, 'is request body')
             await schema.parseAsync({
                 body: req.body,
                 query: req.query,
@@ -17,7 +18,7 @@ export const validateByBody =
         }
     }
 
-    export const validateByid =
+export const validateByid =
     (schema: AnyZodObject) =>
     async (req: Request, res: Response, next: NextFunction) => {
         try {

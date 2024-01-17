@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express'
-import { signupBodySchema } from '../validators/auth.validator'
+import { loginBodySchema, signupBodySchema } from '../validators/auth.validator'
 import * as AuthService from '../service/auth.service'
 
 export const registerUser = async (
@@ -17,38 +17,37 @@ export const registerUser = async (
     }
 }
 
-// export const loginUser = async (
-//     req: Request,
-//     res: Response,
-//     next: NextFunction
-// ) => {
-//     try {
-//         const { email, password } = loginBodySchema.parse(req.body)
+export const loginUser = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+) => {
+    try {
+        const { email, password } = loginBodySchema.parse(req.body)
 
-//         const { accessToken, refreshToken } = await AuthService.login(
-//             email,
-//             password
-//         )
-//         res.cookie('refreshToken', refreshToken, {
-//             httpOnly: true,
-//             path: '/api/auth/refresh',
-//         }).json({ accessToken })
-//     } catch (error) {
-//         next(error)
-//     }
-// }
+        const { accessToken, refreshToken } = await AuthService.login(
+            email,
+            password
+        )
+        res.cookie('refreshToken', refreshToken, {
+            httpOnly: true,
+            path: '/api/auth/refresh',
+        }).json({ accessToken })
+    } catch (error) {
+        next(error)
+    }
+}
 
-// export const refreshToken = async (
-//     req: Request,
-//     res: Response,
-//     next: NextFunction
-// ) => {
-//     const { refreshToken } = req.cookies
-//     try {
-//         const token = await AuthService.refresh(refreshToken)
-//         res.json({ accessToken: token })
-//     } catch (error) {
-//         next(error)
-//     }
-// }
-
+export const refreshToken = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+) => {
+    const { refreshToken } = req.cookies
+    try {
+        const token = await AuthService.refresh(refreshToken)
+        res.json({ accessToken: token })
+    } catch (error) {
+        next(error)
+    }
+}
