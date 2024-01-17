@@ -9,11 +9,14 @@ import {
     updateTodoDTObody,
     updateTodoDTOid,
 } from '../validators/updateTodo.validator'
-import { authenticateToken } from '../middlewares/authentication.middleware'
+import { authenticateToken, isAdmin } from '../middlewares/authentication.middleware'
 const router = Router()
 
 //POST to databse
 router.post('/',validateByBody(postTodoValidatorDTO),authenticateToken,todoController.postTodos)
+
+//GET all todos
+router.get('/',authenticateToken,isAdmin,todoController.getTodos)
 
 //GET todos by id
 router.get('/:id', validateByid(getTodoDTO),authenticateToken,todoController.getTodosByID)

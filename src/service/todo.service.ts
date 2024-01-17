@@ -4,6 +4,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { PrismaClient } from '@prisma/client'
 import Boom from '@hapi/boom'
+import { response } from 'express'
 const prisma = new PrismaClient()
 
 //POST todos
@@ -15,6 +16,24 @@ export const postTodo = async (body: any) => {
             status,
         },
     })
+}
+
+//GET todos by id
+export const getAll = async () => {
+    // try{
+    //     return await prisma.todo.findMany()
+    // }
+    // catch(err){
+    //     next(err)
+    // }
+    const result = await prisma.todo.findMany()
+    if (result != null) {
+        console.log('i am here')
+        return result}
+    else {
+        return 'Database is empty'
+    }
+
 }
 
 //GET todos by id
@@ -36,29 +55,29 @@ export const getTodo = async (id: any) => {
 
 //DELETE  by id
 export const deleteTodo = async (id: any) => {
-    try{await prisma.todo.findUniqueOrThrow
-        ({
+    try {
+        await prisma.todo.findUniqueOrThrow({
             where: {
                 id: Number(id),
-            }})
+            },
+        })
         return await prisma.todo.delete({
             where: {
                 id: Number(id),
             },
         })
-    }
-    catch (err: any) {
+    } catch (err: any) {
         if (err.code === 'P2025') {
             throw Boom.notFound('post not found')
         } else {
             throw err
         }
     }
-    }
+}
 
 //UPDATE by id
 export const updateTodo = async (id: any, body: any) => {
-    try{
+    try {
         const { title, status } = body
         return await prisma.todo.update({
             where: { id: Number(id) },
@@ -67,8 +86,7 @@ export const updateTodo = async (id: any, body: any) => {
                 status: status,
             },
         })
-    }
-    catch (err: any) {
+    } catch (err: any) {
         if (err.code === 'P2025') {
             throw Boom.notFound('post not found')
         } else {
