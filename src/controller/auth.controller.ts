@@ -1,7 +1,6 @@
 import { NextFunction, Request, Response } from 'express'
 import { loginBodySchema, signupBodySchema } from '../validators/auth.validator'
 import * as AuthService from '../service/auth.service'
-import { string } from 'zod'
 
 //Register new user
 export const registerUser = async (
@@ -43,7 +42,17 @@ export const loginUser = async (
 
 
 // //Delete user
-// export const deleteUser=async(req:Request, res: Response, next: NextFunction)=>{
+export const deleteUser=async(req:Request, res:Response, next:NextFunction)=>{
+    try {
+        const request  = loginBodySchema.parse(req.body)
+        const response = await AuthService.deleteUser(request)
+        res.json(response)
+    }
+    catch(err)
+    {
+        next(err)
+    }
+}
 
 
 //Refresh access token

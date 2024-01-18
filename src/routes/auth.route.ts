@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { validateByBody, validateByid } from '../util/validate'
+import { validateByBody } from '../util/validate'
 import {
     loginBodySchema,
     loginSchema,
@@ -7,8 +7,7 @@ import {
     signupSchema,
 } from '../validators/auth.validator'
 import * as AuthController from '../controller/auth.controller'
-import { authenticateToken, isAdmin } from '../middlewares/authentication.middleware'
-import { getTodosByID } from '../controller/todo.controller'
+import { authenticateToken } from '../middlewares/authentication.middleware'
 
 const router = Router()
 
@@ -31,6 +30,9 @@ router.post('/logout', () => {
         'this method should store any session info if stored, or remove cookie from the header'
     )
 })
+
+//delete user not working
+router.delete('/delete',validateByBody(loginBodySchema),authenticateToken,AuthController.deleteUser)
 
 //Forgot password
 router.post('/forgot-password', () => {

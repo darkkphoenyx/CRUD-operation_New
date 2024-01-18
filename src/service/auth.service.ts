@@ -1,8 +1,8 @@
 import prisma from '../util/prisma'
 import * as jwt from 'jsonwebtoken'
 import bcrypt from 'bcryptjs'
-import { signupBodySchema } from '../validators/auth.validator'
-import { z } from 'zod'
+import { loginBodySchema, signupBodySchema } from '../validators/auth.validator'
+import { number, string, z } from 'zod'
 import Boom from '@hapi/boom'
 import {
     createAccessToken,
@@ -71,3 +71,31 @@ export async function refresh(refreshToken: string) {
         throw Boom.unauthorized('User is not logged in')
     }
 }
+
+//DELETE user 
+export async function deleteUser(data:z.infer<typeof loginBodySchema>){
+    const {email, password} = data
+    try{
+    const user = await prisma.user.findFirstOrThrow({ where: { email:email } })
+    if (!user) {
+        throw Boom.badRequest('Username or password is incorrect.')
+    } else {
+        console.log(user.password)
+    }
+    console.log(user.password)
+
+    const passwordMatch = await bcrypt.compare(password, user.password)
+
+    if (!passwordMatch) {
+        throw Boom.badRequest('Username or password is incorrect.')
+    } 
+
+    return await prisma.user.delete({
+    where:{
+            email: email,
+        }})
+
+}catch(err)
+{
+   throw err
+}}
