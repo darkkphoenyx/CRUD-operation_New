@@ -32,7 +32,7 @@ router.post('/logout', () => {
 })
 
 //delete user not working
-router.delete('/delete',validateByBody(loginBodySchema),authenticateToken,AuthController.deleteUser)
+router.delete('/delete',authenticateToken,AuthController.deleteUser)
 
 //Forgot password
 router.post('/forgot-password', () => {
